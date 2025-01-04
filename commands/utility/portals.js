@@ -25,20 +25,16 @@ module.exports = {
           }[portal.dimension];
 
           const location = portal.position
-            ? `**[${portal.position.x}, ${portal.position.y}]**`
+            ? `**[${portal.position.x}, ${portal.position.y}]** ~ *Zaap [${portal.position.transport.x}, ${portal.position.transport.y}]*`
             : "Location Unknown";
 
-          const zaap = portal.position
-            ? ` ~ *Zaap [${portal.position.transport.x}, ${portal.position.transport.y}]*`
-            : "";
-
-          return { dimension, location, zaap };
+          return { dimension, location };
         });
       })
       .then((portals) => {
         return portals
-          .map(({ dimension, location, zaap }) => {
-            return `${dimension}: ${location}${zaap}`;
+          .map(({ dimension, location }) => {
+            return `${dimension}: ${location}`;
           })
           .join("\n");
       });

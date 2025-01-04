@@ -17,10 +17,6 @@ module.exports = {
       })
       .then((data) => {
         return data.map((portal) => {
-          const location = portal.position
-            ? `[${portal.position.x}, ${portal.position.y}]`
-            : "Location Unknown";
-
           const dimension = {
             ecaflipus: "Ecaflipus",
             enutrosor: "Enurado",
@@ -28,13 +24,21 @@ module.exports = {
             xelorium: "Xelorium",
           }[portal.dimension];
 
-          return { dimension, location };
+          const location = portal.position
+            ? `**[${portal.position.x}, ${portal.position.y}]**`
+            : "Location Unknown";
+
+          const zaap = portal.position
+            ? ` ~ *Zaap [${portal.position.transport.x}, ${portal.position.transport.y}]*`
+            : "";
+
+          return { dimension, location, zaap };
         });
       })
       .then((portals) => {
         return portals
-          .map(({ dimension, location }) => {
-            return `${dimension}: **${location}**`;
+          .map(({ dimension, location, zaap }) => {
+            return `${dimension}: ${location}${zaap}`;
           })
           .join("\n");
       });
